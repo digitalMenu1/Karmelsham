@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="./images/Logo.png">
+    <title>Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        body {
+            background-color: #0F1A20;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .slider {
+            width: 90vw;
+            max-width: 400px;
+            height: 70vh;
+            max-height: 600px;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+
+        .slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+        }
+
+        .slider img.active {
+            opacity: 1;
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .controls button {
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 50%;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .controls button:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+        }
+
+        .photo-number {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #0F1A20;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+
+        @media (max-width: 320px) {
+            .slider {
+                width: 63vw;
+                height: 55vh;
+            }
+
+            .controls button {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+        }
+
+        @media screen and (min-device-width: 375px) and (max-device-width: 430px) and (min-device-height: 812px) {
+            .slider {
+                width: 95vw;
+                height: 70vh;
+            }
+        }
+
+
+
+        @media (max-width: 414px) and (min-height: 868px) {
+            .slider {
+                width: 97vw;
+                height: 70vh;
+            }
+        }
+
+
+        @media (min-width: 600px) {
+            .slider {
+                width: 60vw;
+                height: 75vh;
+            }
+        }
+
+
+        @media (min-width: 768px) {
+            .slider {
+                width: 50vw;
+                height: 80vh;
+            }
+        }
+
+
+        @media (min-width: 1024px) {
+            .slider {
+                width: 40vw;
+                height: 85vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slider">
+        <div class="photo-number"></div>
+        <img src="./images/page1.jpg" class="active" alt="Menu 1">
+        <img src="./images/page2.jpg" alt="Menu 2">
+        <img src="./images/page3.jpg" alt="Menu 3">
+    </div>
+    <div class="controls">
+        <button onclick="prevSlide()">&#10094;</button>
+        <button onclick="nextSlide()">&#10095;</button>
+    </div>
+    <script>
+        let currentIndex = 0;
+        const images = document.querySelectorAll(".slider img");
+        const photoNumber = document.querySelector(".photo-number");
+
+        function showSlide(index) {
+            images.forEach((img, i) => {
+                img.classList.toggle("active", i === index);
+            });
+            // Update the photo number indicator
+            photoNumber.textContent = `${index + 1} / ${images.length}`;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            currentIndex = 0;
+            showSlide(currentIndex);
+        });
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showSlide(currentIndex);
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            showSlide(currentIndex);
+        }
+
+    </script>
+</body>
+
+</html>
